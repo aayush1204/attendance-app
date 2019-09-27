@@ -1,0 +1,81 @@
+{%extends 'base.html'%}
+
+{%block content %}
+<div class="page-header">
+    
+    <h1>{{user.username}}'s Dashboard</h1>
+    
+    <!-- <a href="accounts/register">Register</a> -->
+</div>
+<div class="col-xs-6"> 
+{% if user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+
+    {% else %}
+    <a href="{% url 'login_url' %}">Login</a>
+    <a href="{% url 'register_url' %}">Register</a>
+
+{%endif%}
+</div>
+<div class="col-xs-6">
+<form action="addsubject">
+        <input type="submit" value="Add Subject" style="margin-left: 0px">
+    </form>
+</div>
+<hr>
+{%for i in db %}
+    <div class="col-xs-12">
+    {% ifequal request.user i.student_name %} <!--i.studentname is a user and request.user.username is a string -->
+        <!-- <hr> --><hr>
+        <div class="col-xs-12 shadow_method" style="padding-bottom:10px">
+        
+        <span class="ft" style="margin-left: 15px"><b>Subject Name</b> - {{i.subject_name}}</span>
+        <span class="ft" style="margin-left: 231px"><b>Total Lectures</b> - {{i.total_lectures}}</span><br>
+        <!-- <a href="">
+        <button> name="add_btn" id="add_btn">add</button></a> -->
+        <!--Mission Patch Link-{{i.mission_patch_link}}<br> -->
+
+        <span class="ft" style="margin-left: 15px"><b>Missed Lectures</b> - {{i.missed_lectures}}</span>
+        <span class="ft" style="margin-left: 232px"><b>Attended Lectures</b> - {{i.attended_lectures}}</span>
+        <!-- <img src="{{i.mission_patch_link}}" width="150" height="170" style="margin-left: 195px"><br><br> -->
+        
+        <form action="edit">
+            <!-- <input type="submit" value="Edit" style="margin-left: 15px"> -->
+            <a href="{% url 'edit' sb=i.idn %}" style="margin-left:15px">Edit</a>
+        </form>
+        
+        
+        <form action="delete">
+            <!-- <input type="submit" value="Edit" style="margin-left: 15px"> -->
+            <a href="{% url 'delete' sb=i.idn %}" style="margin-left:15px">Delete</a>
+        </form>
+        
+        </div>
+        <hr>
+        
+        
+        
+    {% endifequal %}
+    
+    </div>
+
+    
+{% endfor %}
+
+
+{% endblock %}  
+
+
+
+<!-- {% for i in db %}
+
+{{i.subject_name}}
+{{i.total_lectures}}
+{{i.missed_lectures}}
+{{i.attended_lectures}}
+
+{% endfor %}
+<span>subjectname</span>
+<span>total-</span>
+<span>attended</span>
+<span>missed</span> -->
