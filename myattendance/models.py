@@ -16,6 +16,7 @@ class StudentEntries(models.Model):
     attended_lectures = models.IntegerField(default=0)
     missed_lectures = models.IntegerField(default=0)
     idn= models.IntegerField(default=0)
+    percentage = models.FloatField(default=0)
 
     def __str__(self):
             return self.subject_name

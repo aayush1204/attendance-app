@@ -11,6 +11,7 @@ urlpatterns = [
    path('dashboard/addsubject/', views.addsubject, name='addsubject'),
    path('dashboard/delete/addsubject/', views.addsubject, name='addsubject'),
    path('dashboard/addsubject/updatesubjectinfo', views.addsubjecttodatabase, name='addsubjecttodatabase'),
+   path('dashboard/update/addsubject/updatesubjectinfo', views.addsubjecttodatabase, name='addsubjecttodatabase'),
    path('dashboard/delete/addsubject/updatesubjectinfo', views.addsubjecttodatabase, name='addsubjecttodatabase'),
    path('dashboard/delete/<int:sb>',views.deletesubject, name='delete'),
 ]

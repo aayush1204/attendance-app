@@ -5,6 +5,7 @@ from datetime import datetime
 from myattendance.models import StudentEntries
 from django.contrib.auth.decorators import login_required
 from accounts.views import *
+from decimal import *
 # Create your views here.
 
 @login_required
@@ -36,9 +37,14 @@ def updateinfo(request, p):
     tlec=request.GET['totallectures']
     mlec=request.GET['missedlectures']
     alec=request.GET['attendedlectures'] #querydict object
+    t=int(tlec)
+    a=float(alec)
 
-    
-    StudentEntries.objects.filter(idn=p).filter(student_name=request.user).update(total_lectures=tlec,missed_lectures=mlec,attended_lectures=alec)
+    # pr=((a/t)*100)
+    pr=float((a/t)*100)
+
+    pw=str((round(pr, 1)))
+    StudentEntries.objects.filter(idn=p).filter(student_name=request.user).update(total_lectures=tlec,missed_lectures=mlec,attended_lectures=alec,percentage=pw)
 
     db=StudentEntries.objects.all()
     
@@ -67,11 +73,18 @@ def addsubjecttodatabase(request):
     mlec=request.GET['missedlectures']
     alec=request.GET['attendedlectures'] #querydict object
     sname=request.GET['subjectname']
+    t=int(tlec)
+    a=float(alec)
 
+    # pr=((a/t)*100)
+    pr=float((a/t)*100)
+
+    pw=str((round(pr, 1)))
+    
     am=StudentEntries.objects.all().last()
     q=am.idn
     q=q+1
-    db = StudentEntries.objects.create(idn=q,total_lectures=tlec,missed_lectures=mlec,attended_lectures=alec,subject_name=sname,student_name=request.user)
+    db = StudentEntries.objects.create(idn=q,total_lectures=tlec,missed_lectures=mlec,attended_lectures=alec,subject_name=sname,student_name=request.user,percentage=pw)
     db.save()
     db=StudentEntries.objects.all()
     
